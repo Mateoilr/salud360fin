@@ -1,0 +1,7 @@
+{
+  "name": "salud360",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
