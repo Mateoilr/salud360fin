@@ -1,0 +1,128 @@
+<ion-header [translucent]="true" class="gradient-header">
+  <ion-toolbar color="primary">
+    <ion-title>🌸 Mi Salud</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="openNotifications()">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="content-padding mujer-theme">
+  <!-- Saludo personalizado -->
+  <div class="welcome-section">
+    <h2>¡Hola! 👋</h2>
+    <p>¿Cómo te sientes hoy?</p>
+  </div>
+
+  <!-- Resumen del ciclo menstrual -->
+  <ion-card class="cycle-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="calendar" color="secondary"></ion-icon>
+        Tu Ciclo Menstrual
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="cycle-info">
+        <div class="cycle-day">
+          <h3>Día {{ currentCycleDay }}</h3>
+          <p>{{ currentPhase }}</p>
+        </div>
+        <div class="cycle-visual">
+          <ion-progress-bar
+            [value]="cycleProgress"
+            color="secondary">
+          </ion-progress-bar>
+        </div>
+      </div>
+      <ion-button
+        fill="outline"
+        color="secondary"
+        (click)="openCycleDetails()">
+        Ver detalles
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Estado de energía -->
+  <ion-card class="energy-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="battery-charging" color="warning"></ion-icon>
+        Nivel de Energía
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="energy-level">
+        <ion-range
+          [value]="energyLevel"
+          min="0"
+          max="100"
+          color="warning"
+          [disabled]="true">
+        </ion-range>
+        <p>{{ energyLevel }}% - {{ getEnergyDescription() }}</p>
+      </div>
+      <ion-button
+        fill="clear"
+        size="small"
+        (click)="updateEnergy()">
+        Actualizar nivel
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Acciones rápidas -->
+  <div class="quick-actions">
+    <h3>Acciones Rápidas</h3>
+    <div class="actions-grid">
+      <ion-button
+        expand="block"
+        fill="outline"
+        color="primary"
+        (click)="openDailyTest()">
+        <ion-icon name="clipboard" slot="start"></ion-icon>
+        Test Diario
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        color="secondary"
+        (click)="logSymptom()">
+        <ion-icon name="medical" slot="start"></ion-icon>
+        Registrar Síntoma
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        color="success"
+        (click)="viewTips()">
+        <ion-icon name="bulb" slot="start"></ion-icon>
+        Consejos del Día
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Recordatorios -->
+  <ion-card class="reminders-card" *ngIf="reminders.length > 0">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="alarm" color="primary"></ion-icon>
+        Recordatorios
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item *ngFor="let reminder of reminders" lines="none">
+        <ion-icon [name]="reminder.icon" slot="start" [color]="reminder.color"></ion-icon>
+        <ion-label>
+          <h3>{{ reminder.title }}</h3>
+          <p>{{ reminder.description }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

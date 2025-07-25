@@ -1,0 +1,147 @@
+ 1. PANTALLAS FINALES Y PROPÓSITO
+Estas son todas las pantallas que tendrá tu app y para qué sirven:
+
+🔐 Pantallas de acceso (comunes)
+Pantalla	Propósito
+Login	Iniciar sesión con correo/contraseña o redes sociales
+Registro	Crear nueva cuenta
+Selección de Género	Identificar como hombre o mujer para personalizar la experiencia
+
+👩 Pantallas específicas para mujeres
+Pantalla	Propósito
+Inicio Mujer	Vista principal con ciclo, energía, consejos, calendario personalizado
+Test Diario Mujer	Registrar síntomas, ánimo, energía, sueño, actividad física diaria
+Ciclo Menstrual	Ver fases del ciclo, registrar síntomas y eventos
+Estadísticas Mujer	Ver gráficas del ciclo, emociones, energía, etc.
+
+👨 Pantallas específicas para hombres
+Pantalla	Propósito
+Inicio Hombre	Vista principal con energía, emociones, recomendaciones
+Test Diario Hombre	Registrar energía, estrés, sueño, estado físico diario
+Estadísticas Hombre	Ver gráficas de bienestar emocional y físico
+
+🧩 Pantallas comunes para todos los usuarios
+Pantalla	Propósito
+Comunidad	Foro o chat anónimo para compartir experiencias
+Bienestar	Acceso a artículos, videos, tests de salud mental y física
+Perfil	Ver/editar datos personales, cerrar sesión, cambiar configuración
+Personalización	Elegir qué eventos o datos se muestran en el calendario
+
+📱 PANTALLAS EN LA BARRA DE TABS
+Para mujeres:
+
+🏠 Inicio
+
+📅 Ciclo
+
+📊 Estadísticas
+
+🧘 Bienestar
+
+👤 Perfil
+
+Para hombres:
+
+🏠 Inicio
+
+📊 Estadísticas
+
+🧘 Bienestar
+
+🗣️ Comunidad
+
+👤 Perfil
+
+🎨 2. DISEÑO Y COLORES
+✅ Paleta de colores sugerida
+Elemento	Color sugerido	HEX
+Primario	Lavanda suave	#9A8CFF
+Secundario mujer	Coral rosado	#F8A1D1
+Secundario hombre	Celeste suave	#A0D9E6
+Fondo claro	Blanco humo	#FAFAFA
+Texto principal	Gris oscuro	#333333
+Éxito	Verde pastel	#A2E3B2
+Advertencia	Amarillo suave	#FFE082
+Error	Rojo coral	#FF6B6B
+
+✅ Tipografía sugerida
+Poppins, Nunito o Open Sans (legibles, redondeadas, amigables)
+
+✅ Estilo visual
+Espacios blancos amplios
+
+Botones suaves con esquinas redondeadas (border-radius: 20px)
+
+Íconos de Ionicons o Material Symbols
+
+Transiciones suaves (.3s ease-in-out)
+
+🔐 3. SERVICIOS Y AUTENTICACIÓN CON FIREBASE
+✅ Librerías necesarias
+bash
+Copiar
+Editar
+npm install firebase @angular/fire
+✅ Configuración en environment.ts
+ts
+Copiar
+Editar
+export const environment = {
+  production: false,
+  firebase: {
+    apiKey: "TU_API_KEY",
+    authDomain: "tu-app.firebaseapp.com",
+    projectId: "tu-app",
+    storageBucket: "tu-app.appspot.com",
+    messagingSenderId: "XXXXXXX",
+    appId: "XXXXXXXXXX"
+  }
+};
+✅ Configuración en app.module.ts
+ts
+Copiar
+Editar
+import { provideFirebaseApp, initializeApp } from '@angular/fire/app';
+import { provideAuth, getAuth } from '@angular/fire/auth';
+
+@NgModule({
+  imports: [
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
+    provideAuth(() => getAuth())
+  ]
+})
+export class AppModule {}
+✅ Servicio de autenticación (auth.service.ts)
+ts
+Copiar
+Editar
+import { Injectable } from '@angular/core';
+import { Auth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut } from '@angular/fire/auth';
+
+@Injectable({ providedIn: 'root' })
+export class AuthService {
+  constructor(private auth: Auth) {}
+
+  login(email: string, password: string) {
+    return signInWithEmailAndPassword(this.auth, email, password);
+  }
+
+  register(email: string, password: string) {
+    return createUserWithEmailAndPassword(this.auth, password);
+  }
+
+  logout() {
+    return signOut(this.auth);
+  }
+
+  getUser() {
+    return this.auth.currentUser;
+  }
+}
+✅ Uso en Login Page
+ts
+Copiar
+Editar
+this.authService.login(this.email, this.password)
+  .then(() => this.router.navigate(['/inicio']))
+  .catch(err => this.error = err.message);

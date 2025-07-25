@@ -1,0 +1,202 @@
+<ion-content class="register-content">
+  <div class="register-container">
+    <!-- Logo y título -->
+    <div class="logo-section">
+      <div class="app-logo">
+        <ion-icon name="heart" color="primary"></ion-icon>
+      </div>
+      <h1 class="app-title">Salud360</h1>
+      <p class="app-subtitle">Únete a nuestra comunidad de bienestar</p>
+    </div>
+
+    <!-- Formulario de registro -->
+    <form (ngSubmit)="register()" #registerForm="ngForm" class="register-form">
+      <h2 class="form-title">Crear Cuenta</h2>
+
+      <!-- Campo de nombre -->
+      <div class="input-group">
+        <ion-item
+          [class.error]="nameError"
+          class="custom-input"
+          lines="none">
+          <ion-icon name="person-outline" slot="start" color="medium"></ion-icon>
+          <ion-input
+            type="text"
+            [(ngModel)]="name"
+            name="name"
+            placeholder="Nombre completo"
+            required
+            #nameInput="ngModel"
+            (ionBlur)="validateName()">
+          </ion-input>
+        </ion-item>
+        <div class="error-message" *ngIf="nameError">
+          <ion-icon name="alert-circle" color="danger"></ion-icon>
+          <span>{{ nameError }}</span>
+        </div>
+      </div>
+
+      <!-- Campo de email -->
+      <div class="input-group">
+        <ion-item
+          [class.error]="emailError"
+          class="custom-input"
+          lines="none">
+          <ion-icon name="mail-outline" slot="start" color="medium"></ion-icon>
+          <ion-input
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Correo electrónico"
+            required
+            #emailInput="ngModel"
+            (ionBlur)="validateEmail()">
+          </ion-input>
+        </ion-item>
+        <div class="error-message" *ngIf="emailError">
+          <ion-icon name="alert-circle" color="danger"></ion-icon>
+          <span>{{ emailError }}</span>
+        </div>
+      </div>
+
+      <!-- Campo de contraseña -->
+      <div class="input-group">
+        <ion-item
+          [class.error]="passwordError"
+          class="custom-input"
+          lines="none">
+          <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Contraseña (mín. 6 caracteres)"
+            required
+            #passwordInput="ngModel"
+            (ionBlur)="validatePassword()">
+          </ion-input>
+          <ion-button
+            fill="clear"
+            slot="end"
+            (click)="togglePassword()"
+            color="medium">
+            <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <div class="error-message" *ngIf="passwordError">
+          <ion-icon name="alert-circle" color="danger"></ion-icon>
+          <span>{{ passwordError }}</span>
+        </div>
+      </div>
+
+      <!-- Campo de confirmar contraseña -->
+      <div class="input-group">
+        <ion-item
+          [class.error]="confirmPasswordError"
+          class="custom-input"
+          lines="none">
+          <ion-icon name="shield-checkmark-outline" slot="start" color="medium"></ion-icon>
+          <ion-input
+            [type]="showConfirmPassword ? 'text' : 'password'"
+            [(ngModel)]="confirmPassword"
+            name="confirmPassword"
+            placeholder="Confirmar contraseña"
+            required
+            #confirmPasswordInput="ngModel"
+            (ionBlur)="validateConfirmPassword()">
+          </ion-input>
+          <ion-button
+            fill="clear"
+            slot="end"
+            (click)="toggleConfirmPassword()"
+            color="medium">
+            <ion-icon [name]="showConfirmPassword ? 'eye-off' : 'eye'"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <div class="error-message" *ngIf="confirmPasswordError">
+          <ion-icon name="alert-circle" color="danger"></ion-icon>
+          <span>{{ confirmPasswordError }}</span>
+        </div>
+      </div>
+
+      <!-- Checkbox de términos -->
+      <div class="terms-section">
+        <ion-item lines="none" class="terms-item">
+          <ion-checkbox
+            slot="start"
+            [(ngModel)]="acceptTerms"
+            name="acceptTerms"
+            (ionChange)="validateTerms()">
+          </ion-checkbox>
+          <ion-label class="terms-label">
+            Acepto los
+            <ion-button fill="clear" size="small" (click)="openTerms()">
+              términos y condiciones
+            </ion-button>
+            y la
+            <ion-button fill="clear" size="small" (click)="openPrivacy()">
+              política de privacidad
+            </ion-button>
+          </ion-label>
+        </ion-item>
+        <div class="error-message" *ngIf="termsError">
+          <ion-icon name="alert-circle" color="danger"></ion-icon>
+          <span>{{ termsError }}</span>
+        </div>
+      </div>
+
+      <!-- Error general -->
+      <ion-item
+        *ngIf="generalError"
+        class="error-alert"
+        lines="none">
+        <ion-icon name="alert-circle" slot="start" color="danger"></ion-icon>
+        <ion-label color="danger">
+          <h3>Error en el registro</h3>
+          <p>{{ generalError }}</p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Botón de registro -->
+      <ion-button
+        expand="block"
+        type="submit"
+        class="register-btn"
+        [disabled]="isLoading || !registerForm.valid || !acceptTerms"
+        color="primary">
+        <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+        <span *ngIf="!isLoading">Crear Cuenta</span>
+        <span *ngIf="isLoading">Creando cuenta...</span>
+      </ion-button>
+    </form>
+
+    <!-- Separador -->
+    <div class="divider">
+      <span>O regístrate con</span>
+    </div>
+
+    <!-- Registro social -->
+    <div class="social-section">
+      <ion-button
+        expand="block"
+        fill="outline"
+        class="social-btn google-btn"
+        (click)="registerWithGoogle()"
+        [disabled]="isLoading">
+        <ion-icon name="logo-google" slot="start"></ion-icon>
+        Google
+      </ion-button>
+    </div>
+
+    <!-- Link a login -->
+    <div class="login-link">
+      <p>¿Ya tienes una cuenta?</p>
+      <ion-button
+        fill="clear"
+        color="primary"
+        (click)="goToLogin()">
+        Inicia sesión aquí
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

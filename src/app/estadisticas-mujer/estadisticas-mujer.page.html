@@ -1,0 +1,69 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="secondary">
+    <ion-title>Estadísticas</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Estadísticas</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="stats-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Resumen de Salud Femenina</ion-card-title>
+        <ion-card-subtitle>Últimos 30 días</ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="stat-item">
+          <ion-icon name="calendar" color="tertiary"></ion-icon>
+          <div class="stat-info">
+            <h3>Ciclo Menstrual</h3>
+            <p>Día 15 de 28</p>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <ion-icon name="heart" color="danger"></ion-icon>
+          <div class="stat-info">
+            <h3>Frecuencia Cardíaca</h3>
+            <p>Promedio: 75 bpm</p>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <ion-icon name="fitness" color="success"></ion-icon>
+          <div class="stat-info">
+            <h3>Actividad Física</h3>
+            <p>12 días activos</p>
+          </div>
+        </div>
+        
+        <div class="stat-item">
+          <ion-icon name="moon" color="secondary"></ion-icon>
+          <div class="stat-info">
+            <h3>Calidad del Sueño</h3>
+            <p>7.5 horas promedio</p>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Seguimiento Hormonal</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <p>Gráfico de fluctuaciones hormonales aquí...</p>
+        <ion-button expand="block" fill="outline" color="secondary">
+          Ver Análisis Completo
+        </ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

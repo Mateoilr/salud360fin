@@ -1,2 +1,198 @@
 // For information on how to create your own theme, please see:
 // http://ionicframework.com/docs/theming/
+
+/** Ionic CSS Variables **/
+:root {
+  /* ===== PALETA DE COLORES SALUD360 - ACTUALIZADA ===== */
+
+  /* Color Primario - Azul violeta moderno */
+  --ion-color-primary: #667eea;
+  --ion-color-primary-rgb: 102, 126, 234;
+  --ion-color-primary-contrast: #ffffff;
+  --ion-color-primary-contrast-rgb: 255, 255, 255;
+  --ion-color-primary-shade: #5a6fd8;
+  --ion-color-primary-tint: #7589ec;
+
+  /* Color Secundario Mujer - Rosa suave */
+  --ion-color-secondary: #F8A1D1;
+  --ion-color-secondary-rgb: 248, 161, 209;
+  --ion-color-secondary-contrast: #000000;
+  --ion-color-secondary-contrast-rgb: 0, 0, 0;
+  --ion-color-secondary-shade: #da8eb8;
+  --ion-color-secondary-tint: #f9aad6;
+
+  /* Color Terciario - Violeta púrpura */
+  --ion-color-tertiary: #764ba2;
+  --ion-color-tertiary-rgb: 118, 75, 162;
+  --ion-color-tertiary-contrast: #ffffff;
+  --ion-color-tertiary-contrast-rgb: 255, 255, 255;
+  --ion-color-tertiary-shade: #68428f;
+  --ion-color-tertiary-tint: #8459ab;
+
+  /* Color de Éxito - Verde vibrante */
+  --ion-color-success: #00C851;
+  --ion-color-success-rgb: 0, 200, 81;
+  --ion-color-success-contrast: #ffffff;
+  --ion-color-success-contrast-rgb: 255, 255, 255;
+  --ion-color-success-shade: #00b347;
+  --ion-color-success-tint: #1ace5a;
+
+  /* Color de Advertencia - Amarillo suave */
+  --ion-color-warning: #FFE082;
+  --ion-color-warning-rgb: 255, 224, 130;
+  --ion-color-warning-contrast: #000000;
+  --ion-color-warning-contrast-rgb: 0, 0, 0;
+  --ion-color-warning-shade: #e0c572;
+  --ion-color-warning-tint: #ffe38f;
+
+  /* Color de Error - Rojo coral */
+  --ion-color-danger: #FF6B6B;
+  --ion-color-danger-rgb: 255, 107, 107;
+  --ion-color-danger-contrast: #ffffff;
+  --ion-color-danger-contrast-rgb: 255, 255, 255;
+  --ion-color-danger-shade: #e05e5e;
+  --ion-color-danger-tint: #ff7a7a;
+
+  /* Colores de fondo y texto */
+  --ion-background-color: #FAFAFA;
+  --ion-background-color-rgb: 250, 250, 250;
+
+  --ion-text-color: #333333;
+  --ion-text-color-rgb: 51, 51, 51;
+
+  --ion-color-step-50: #f7f7f7;
+  --ion-color-step-100: #efefef;
+  --ion-color-step-150: #e7e7e7;
+  --ion-color-step-200: #dfdfdf;
+  --ion-color-step-250: #d7d7d7;
+  --ion-color-step-300: #cfcfcf;
+  --ion-color-step-350: #c7c7c7;
+  --ion-color-step-400: #bfbfbf;
+  --ion-color-step-450: #b7b7b7;
+  --ion-color-step-500: #afafaf;
+  --ion-color-step-550: #a7a7a7;
+  --ion-color-step-600: #9f9f9f;
+  --ion-color-step-650: #979797;
+  --ion-color-step-700: #8f8f8f;
+  --ion-color-step-750: #878787;
+  --ion-color-step-800: #7f7f7f;
+  --ion-color-step-850: #777777;
+  --ion-color-step-900: #6f6f6f;
+  --ion-color-step-950: #676767;
+
+  /* ===== VARIABLES PERSONALIZADAS ===== */
+
+  /* Espacios y bordes */
+  --border-radius-soft: 20px;
+  --border-radius-card: 16px;
+  --border-radius-button: 12px;
+
+  /* Sombras */
+  --shadow-soft: 0 4px 16px rgba(154, 140, 255, 0.15);
+  --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.1);
+
+  /* Transiciones */
+  --transition-smooth: 0.3s ease-in-out;
+
+  /* Gradientes */
+  --gradient-primary: linear-gradient(135deg, #9A8CFF 0%, #F8A1D1 100%);
+  --gradient-background: linear-gradient(180deg, #FAFAFA 0%, #F0F0F0 100%);
+}
+
+/* ===== ESTILOS GLOBALES ===== */
+
+/* Tipografía */
+* {
+  font-family: 'Poppins', 'Nunito', 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+/* Botones suaves */
+ion-button {
+  --border-radius: var(--border-radius-button);
+  --box-shadow: var(--shadow-soft);
+  --transition: var(--transition-smooth);
+  font-weight: 500;
+  text-transform: none;
+}
+
+/* Cards con bordes suaves */
+ion-card {
+  --border-radius: var(--border-radius-card);
+  --box-shadow: var(--shadow-card);
+  margin: 16px;
+}
+
+/* Inputs con estilo suave */
+ion-input, ion-textarea, ion-select {
+  --border-radius: var(--border-radius-soft);
+  --padding-start: 16px;
+  --padding-end: 16px;
+}
+
+/* Tabs con estilo personalizado */
+ion-tab-bar {
+  --background: var(--ion-background-color);
+  --border: 1px solid var(--ion-color-step-200);
+  border-radius: var(--border-radius-soft) var(--border-radius-soft) 0 0;
+}
+
+ion-tab-button {
+  --color: var(--ion-color-step-600);
+  --color-selected: var(--ion-color-primary);
+  --transition: var(--transition-smooth);
+}
+
+/* Género específico - Clases utility */
+.mujer-theme {
+  --ion-color-accent: var(--ion-color-secondary);
+}
+
+.hombre-theme {
+  --ion-color-accent: var(--ion-color-tertiary);
+}
+
+/* Animaciones suaves */
+.smooth-transition {
+  transition: var(--transition-smooth);
+}
+
+/* Headers con gradiente */
+.gradient-header {
+  background: var(--gradient-primary);
+  color: white;
+}
+
+/* Contenido con espaciado amplio */
+.content-padding {
+  padding: 24px 16px;
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ion-background-color: #1a1a1a;
+    --ion-background-color-rgb: 26, 26, 26;
+    --ion-text-color: #ffffff;
+    --ion-text-color-rgb: 255, 255, 255;
+
+    --ion-color-step-50: #262626;
+    --ion-color-step-100: #2e2e2e;
+    --ion-color-step-150: #363636;
+    --ion-color-step-200: #3e3e3e;
+    --ion-color-step-250: #464646;
+    --ion-color-step-300: #4e4e4e;
+    --ion-color-step-350: #565656;
+    --ion-color-step-400: #5e5e5e;
+    --ion-color-step-450: #666666;
+    --ion-color-step-500: #6e6e6e;
+    --ion-color-step-550: #767676;
+    --ion-color-step-600: #7e7e7e;
+    --ion-color-step-650: #868686;
+    --ion-color-step-700: #8e8e8e;
+    --ion-color-step-750: #969696;
+    --ion-color-step-800: #9e9e9e;
+    --ion-color-step-850: #a6a6a6;
+    --ion-color-step-900: #aeaeae;
+    --ion-color-step-950: #b6b6b6;
+  }
+}

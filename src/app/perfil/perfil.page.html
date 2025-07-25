@@ -1,0 +1,547 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Mi Perfil</ion-title>
+    <ion-button slot="end" fill="clear" (click)="openEditModal()">
+      <ion-icon name="create-outline"></ion-icon>
+    </ion-button>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- Segmentos de navegación -->
+  <ion-segment 
+    value="{{selectedSegment}}" 
+    (ionChange)="onSegmentChange($event)"
+    mode="md"
+    class="segment-container">
+    <ion-segment-button value="profile">
+      <ion-icon name="person-outline"></ion-icon>
+      <ion-label>Perfil</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="stats">
+      <ion-icon name="trophy-outline"></ion-icon>
+      <ion-label>Estadísticas</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="achievements">
+      <ion-icon name="medal-outline"></ion-icon>
+      <ion-label>Logros</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="settings">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>Ajustes</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+
+  <!-- Contenido del Perfil -->
+  <div *ngIf="selectedSegment === 'profile'" class="profile-content">
+    <!-- Información principal del usuario -->
+    <ion-card class="profile-header-card">
+      <ion-card-content>
+        <div class="profile-header">
+          <div class="avatar-section">
+            <ion-avatar size="large" (click)="changeAvatar()">
+              <img [src]="userProfile.avatar" [alt]="userProfile.name">
+              <div class="avatar-overlay">
+                <ion-icon name="camera-outline"></ion-icon>
+              </div>
+            </ion-avatar>
+            <ion-badge *ngIf="userProfile.verified" color="primary" class="verified-badge">
+              <ion-icon name="checkmark-circle"></ion-icon>
+            </ion-badge>
+          </div>
+          
+          <div class="profile-info">
+            <h1>{{ userProfile.name }}</h1>
+            <p class="user-level">{{ userStats.level }}</p>
+            <p class="join-date">Miembro desde {{ formatDate(userProfile.joinDate) }}</p>
+            
+            <div class="quick-stats">
+              <div class="stat-item">
+                <span class="stat-number">{{ userStats.points }}</span>
+                <span class="stat-label">Puntos</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">{{ userStats.streak }}</span>
+                <span class="stat-label">Días seguidos</span>
+              </div>
+              <div class="stat-item">
+                <span class="stat-number">{{ achievements.length }}</span>
+                <span class="stat-label">Logros</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="bio-section" *ngIf="userProfile.bio">
+          <p class="bio-text">{{ userProfile.bio }}</p>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Información personal -->
+    <ion-card class="personal-info-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="person-outline"></ion-icon>
+          Información Personal
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-list>
+          <ion-item>
+            <ion-icon name="mail-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Email</h3>
+              <p>{{ userProfile.email }}</p>
+            </ion-label>
+          </ion-item>
+          
+          <ion-item>
+            <ion-icon name="calendar-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Edad</h3>
+              <p>{{ calculateAge() }} años</p>
+            </ion-label>
+          </ion-item>
+          
+          <ion-item>
+            <ion-icon name="fitness-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Altura / Peso</h3>
+              <p>{{ userProfile.height }} cm / {{ userProfile.weight }} kg</p>
+            </ion-label>
+          </ion-item>
+          
+          <ion-item>
+            <ion-icon name="location-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Ubicación</h3>
+              <p>{{ userProfile.location }}</p>
+            </ion-label>
+          </ion-item>
+          
+          <ion-item *ngIf="userProfile.phone">
+            <ion-icon name="call-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Teléfono</h3>
+              <p>{{ userProfile.phone }}</p>
+            </ion-label>
+          </ion-item>
+          
+          <ion-item *ngIf="userProfile.website">
+            <ion-icon name="globe-outline" slot="start"></ion-icon>
+            <ion-label>
+              <h3>Sitio web</h3>
+              <p>{{ userProfile.website }}</p>
+            </ion-label>
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Métricas de salud -->
+    <ion-card class="health-metrics-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="heart-outline"></ion-icon>
+          Métricas de Salud
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="6">
+              <div class="metric-item">
+                <div class="metric-header">
+                  <span class="metric-name">IMC</span>
+                  <ion-chip [color]="getBMIColor(calculateBMI())" size="small">
+                    <ion-label>{{ getBMICategory(calculateBMI()) }}</ion-label>
+                  </ion-chip>
+                </div>
+                <div class="metric-value">{{ calculateBMI() }}</div>
+              </div>
+            </ion-col>
+            
+            <ion-col size="6">
+              <div class="metric-item">
+                <div class="metric-header">
+                  <span class="metric-name">Pasos promedio</span>
+                </div>
+                <div class="metric-value">{{ userStats.avgSteps.toLocaleString() }}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+          
+          <ion-row>
+            <ion-col size="6">
+              <div class="metric-item">
+                <div class="metric-header">
+                  <span class="metric-name">Sueño promedio</span>
+                </div>
+                <div class="metric-value">{{ userStats.avgSleep }}h</div>
+              </div>
+            </ion-col>
+            
+            <ion-col size="6">
+              <div class="metric-item">
+                <div class="metric-header">
+                  <span class="metric-name">Entrenamientos</span>
+                </div>
+                <div class="metric-value">{{ userStats.totalWorkouts }}</div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Contenido de Estadísticas -->
+  <div *ngIf="selectedSegment === 'stats'" class="stats-content">
+    <!-- Progreso de nivel -->
+    <ion-card class="level-progress-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="star-outline"></ion-icon>
+          Progreso de Nivel
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="level-info">
+          <h2>{{ userStats.level }}</h2>
+          <p>{{ userStats.points }} / 3000 puntos</p>
+        </div>
+        
+        <ion-progress-bar 
+          [value]="getLevelProgress() / 100" 
+          color="primary">
+        </ion-progress-bar>
+        
+        <p class="progress-text">{{ getLevelProgress().toFixed(0) }}% hacia el siguiente nivel</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Racha actual -->
+    <ion-card class="streak-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="flame-outline"></ion-icon>
+          Racha Actual
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="streak-display">
+          <div class="streak-number">{{ userStats.streak }}</div>
+          <div class="streak-label">días consecutivos</div>
+          <div class="streak-message">{{ getStreakMessage() }}</div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Estadísticas generales -->
+    <ion-card class="general-stats-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="trophy-outline"></ion-icon>
+          Estadísticas Generales
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="stats-grid">
+          <div class="stat-box">
+            <ion-icon name="checkmark-circle" color="success"></ion-icon>
+            <div class="stat-number">{{ userStats.completedChallenges }}</div>
+            <div class="stat-label">Desafíos completados</div>
+          </div>
+          
+          <div class="stat-box">
+            <ion-icon name="fitness" color="primary"></ion-icon>
+            <div class="stat-number">{{ userStats.totalWorkouts }}</div>
+            <div class="stat-label">Entrenamientos totales</div>
+          </div>
+          
+          <div class="stat-box">
+            <ion-icon name="star" color="warning"></ion-icon>
+            <div class="stat-number">{{ achievements.length }}</div>
+            <div class="stat-label">Logros desbloqueados</div>
+          </div>
+          
+          <div class="stat-box">
+            <ion-icon name="flame" color="danger"></ion-icon>
+            <div class="stat-number">{{ userStats.points }}</div>
+            <div class="stat-label">Puntos totales</div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Actividad reciente -->
+    <ion-card class="recent-activity-card">
+      <ion-card-header>
+        <ion-card-title>
+          <ion-icon name="fitness-outline"></ion-icon>
+          Actividad Reciente
+        </ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <div class="activity-list">
+          <div *ngFor="let activity of recentActivity" class="activity-item">
+            <div class="activity-date">{{ formatDateShort(activity.date) }}</div>
+            <div class="activity-metrics">
+              <span class="metric">{{ activity.steps.toLocaleString() }} pasos</span>
+              <span class="metric">{{ activity.workouts }} entrenamientos</span>
+              <span class="metric">{{ activity.sleep }}h sueño</span>
+              <span class="metric">{{ activity.water }}L agua</span>
+            </div>
+          </div>
+        </div>
+      </ion-card-content>
+    </ion-card>
+  </div>
+
+  <!-- Contenido de Logros -->
+  <div *ngIf="selectedSegment === 'achievements'" class="achievements-content">
+    <div class="achievements-summary">
+      <h2>{{ achievements.length }} Logros Desbloqueados</h2>
+      <p>¡Sigue así para desbloquear más!</p>
+    </div>
+
+    <div *ngFor="let category of getUniqueCategories()" class="achievement-category">
+      <h3 class="category-title">{{ category }}</h3>
+      
+      <div class="achievements-grid">
+        <div 
+          *ngFor="let achievement of getAchievementsByCategory(category)" 
+          class="achievement-item">
+          <div class="achievement-icon">
+            <ion-icon 
+              [name]="achievement.icon" 
+              [color]="achievement.color">
+            </ion-icon>
+          </div>
+          
+          <div class="achievement-info">
+            <h4>{{ achievement.title }}</h4>
+            <p>{{ achievement.description }}</p>
+            <span class="achievement-date">
+              Desbloqueado el {{ formatDate(achievement.dateEarned) }}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenido de Configuración -->
+  <div *ngIf="selectedSegment === 'settings'" class="settings-content">
+    <ion-list>
+      <!-- Opciones de cuenta -->
+      <div class="settings-group">
+        <div class="group-header">
+          <h3>Cuenta</h3>
+        </div>
+        
+        <ion-item button>
+          <ion-icon name="person-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Editar perfil</h3>
+            <p>Cambiar información personal</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item button>
+          <ion-icon name="lock-closed-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Cambiar contraseña</h3>
+            <p>Actualizar tu contraseña</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item button>
+          <ion-icon name="notifications-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Notificaciones</h3>
+            <p>Configurar alertas y recordatorios</p>
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <!-- Opciones de datos -->
+      <div class="settings-group">
+        <div class="group-header">
+          <h3>Datos</h3>
+        </div>
+        
+        <ion-item button (click)="exportData()">
+          <ion-icon name="download-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Exportar datos</h3>
+            <p>Descargar tu información</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item button (click)="shareProfile()">
+          <ion-icon name="share-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Compartir perfil</h3>
+            <p>Comparte tu progreso</p>
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <!-- Opciones de ayuda -->
+      <div class="settings-group">
+        <div class="group-header">
+          <h3>Ayuda</h3>
+        </div>
+        
+        <ion-item button>
+          <ion-icon name="help-circle-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Centro de ayuda</h3>
+            <p>Preguntas frecuentes y soporte</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item button>
+          <ion-icon name="information-circle-outline" slot="start"></ion-icon>
+          <ion-label>
+            <h3>Acerca de</h3>
+            <p>Información de la aplicación</p>
+          </ion-label>
+        </ion-item>
+      </div>
+
+      <!-- Opciones peligrosas -->
+      <div class="settings-group danger-group">
+        <div class="group-header">
+          <h3>Zona de peligro</h3>
+        </div>
+        
+        <ion-item button (click)="deleteAccount()">
+          <ion-icon name="trash-outline" slot="start" color="danger"></ion-icon>
+          <ion-label color="danger">
+            <h3>Eliminar cuenta</h3>
+            <p>Eliminar permanentemente tu cuenta</p>
+          </ion-label>
+        </ion-item>
+        
+        <ion-item button (click)="logout()">
+          <ion-icon name="log-out-outline" slot="start" color="danger"></ion-icon>
+          <ion-label color="danger">
+            <h3>Cerrar sesión</h3>
+            <p>Salir de tu cuenta</p>
+          </ion-label>
+        </ion-item>
+      </div>
+    </ion-list>
+  </div>
+
+  <!-- Modal de edición de perfil -->
+  <ion-modal [isOpen]="isEditModalOpen" (didDismiss)="closeEditModal()">
+    <ng-template>
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Editar Perfil</ion-title>
+          <ion-button slot="start" fill="clear" (click)="closeEditModal()">
+            <ion-icon name="close"></ion-icon>
+          </ion-button>
+          <ion-button slot="end" fill="clear" (click)="saveProfile()">
+            <ion-icon name="checkmark"></ion-icon>
+          </ion-button>
+        </ion-toolbar>
+      </ion-header>
+      
+      <ion-content>
+        <div class="edit-profile-content">
+          <ion-list>
+            <ion-item>
+              <ion-label position="stacked">Nombre</ion-label>
+              <ion-input 
+                [(ngModel)]="editingProfile.name" 
+                placeholder="Tu nombre completo">
+              </ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Email</ion-label>
+              <ion-input 
+                [(ngModel)]="editingProfile.email" 
+                type="email"
+                placeholder="tu@email.com">
+              </ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Biografía</ion-label>
+              <ion-input 
+                [(ngModel)]="editingProfile.bio" 
+                placeholder="Cuéntanos sobre ti">
+              </ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Fecha de nacimiento</ion-label>
+              <ion-datetime 
+                [(ngModel)]="editingProfile.dateOfBirth"
+                display-format="DD/MM/YYYY"
+                picker-format="DD MM YYYY">
+              </ion-datetime>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Género</ion-label>
+              <ion-select [(ngModel)]="editingProfile.gender">
+                <ion-select-option value="Masculino">Masculino</ion-select-option>
+                <ion-select-option value="Femenino">Femenino</ion-select-option>
+                <ion-select-option value="Otro">Otro</ion-select-option>
+              </ion-select>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Altura (cm)</ion-label>
+              <ion-input 
+                [(ngModel)]="editingProfile.height" 
+                type="number"
+                placeholder="175">
+              </ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Peso (kg)</ion-label>
+              <ion-input 
+                [(ngModel)]="editingProfile.weight" 
+                type="number"
+                placeholder="70">
+              </ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Ubicación</ion-label>
+              <ion-input 
+                [(ngModel)]="editingProfile.location" 
+                placeholder="Ciudad, País">
+              </ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Teléfono</ion-label>
+              <ion-input 
+                [(ngModel)]="editingProfile.phone" 
+                placeholder="+123 456 789">
+              </ion-input>
+            </ion-item>
+            
+            <ion-item>
+              <ion-label position="stacked">Sitio web</ion-label>
+              <ion-input 
+                [(ngModel)]="editingProfile.website" 
+                placeholder="https://tusitio.com">
+              </ion-input>
+            </ion-item>
+          </ion-list>
+        </div>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+</ion-content>

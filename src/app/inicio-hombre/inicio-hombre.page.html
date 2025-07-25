@@ -1,0 +1,153 @@
+<ion-header [translucent]="true" class="gradient-header">
+  <ion-toolbar color="primary">
+    <ion-title>💪 Mi Bienestar</ion-title>
+    <ion-buttons slot="end">
+      <ion-button fill="clear" (click)="openNotifications()">
+        <ion-icon name="notifications-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="content-padding hombre-theme">
+  <!-- Saludo personalizado -->
+  <div class="welcome-section">
+    <h2>¡Hola! 👋</h2>
+    <p>¿Cómo te encuentras hoy?</p>
+  </div>
+
+  <!-- Estado emocional y físico -->
+  <ion-card class="wellness-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="heart" color="tertiary"></ion-icon>
+        Estado de Bienestar
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="wellness-meters">
+        <div class="meter">
+          <h4>Estado Emocional</h4>
+          <ion-progress-bar
+            [value]="emotionalState / 10"
+            color="tertiary">
+          </ion-progress-bar>
+          <span>{{ emotionalState }}/10 - {{ getEmotionalDescription() }}</span>
+        </div>
+
+        <div class="meter">
+          <h4>Energía Física</h4>
+          <ion-progress-bar
+            [value]="physicalEnergy / 10"
+            color="success">
+          </ion-progress-bar>
+          <span>{{ physicalEnergy }}/10 - {{ getEnergyDescription() }}</span>
+        </div>
+
+        <div class="meter">
+          <h4>Nivel de Estrés</h4>
+          <ion-progress-bar
+            [value]="stressLevel / 10"
+            color="warning">
+          </ion-progress-bar>
+          <span>{{ stressLevel }}/10 - {{ getStressDescription() }}</span>
+        </div>
+      </div>
+
+      <ion-button
+        fill="outline"
+        color="tertiary"
+        (click)="updateWellness()">
+        Actualizar estado
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Actividad física -->
+  <ion-card class="activity-card">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="fitness" color="success"></ion-icon>
+        Actividad Física Hoy
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <div class="activity-stats">
+        <div class="stat">
+          <h3>{{ workoutMinutes }}</h3>
+          <p>Minutos de ejercicio</p>
+        </div>
+        <div class="stat">
+          <h3>{{ caloriesBurned }}</h3>
+          <p>Calorías quemadas</p>
+        </div>
+        <div class="stat">
+          <h3>{{ steps }}</h3>
+          <p>Pasos dados</p>
+        </div>
+      </div>
+      <ion-button
+        fill="clear"
+        size="small"
+        (click)="logWorkout()">
+        Registrar actividad
+      </ion-button>
+    </ion-card-content>
+  </ion-card>
+
+  <!-- Acciones rápidas -->
+  <div class="quick-actions">
+    <h3>Acciones Rápidas</h3>
+    <div class="actions-grid">
+      <ion-button
+        expand="block"
+        fill="outline"
+        color="primary"
+        (click)="openDailyTest()">
+        <ion-icon name="clipboard" slot="start"></ion-icon>
+        Test Diario
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        color="tertiary"
+        (click)="checkMood()">
+        <ion-icon name="happy" slot="start"></ion-icon>
+        Estado de Ánimo
+      </ion-button>
+
+      <ion-button
+        expand="block"
+        fill="outline"
+        color="success"
+        (click)="viewTips()">
+        <ion-icon name="bulb" slot="start"></ion-icon>
+        Consejos del Día
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Objetivos del día -->
+  <ion-card class="goals-card" *ngIf="dailyGoals.length > 0">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="trophy" color="warning"></ion-icon>
+        Objetivos del Día
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item *ngFor="let goal of dailyGoals" lines="none">
+        <ion-checkbox
+          slot="start"
+          [checked]="goal.completed"
+          (ionChange)="toggleGoal(goal)">
+        </ion-checkbox>
+        <ion-label [class.completed]="goal.completed">
+          <h3>{{ goal.title }}</h3>
+          <p>{{ goal.description }}</p>
+        </ion-label>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

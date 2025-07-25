@@ -1,0 +1,42 @@
+<ion-header [translucent]="true">
+  <ion-toolbar color="primary">
+    <ion-title>Test Diario</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Test Diario</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div class="test-container">
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>¿Cómo te sientes hoy?</ion-card-title>
+        <ion-card-subtitle>Evalúa tu estado de ánimo</ion-card-subtitle>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <div class="mood-buttons">
+          <ion-button fill="outline" size="large">😄 Excelente</ion-button>
+          <ion-button fill="outline" size="large">😊 Bien</ion-button>
+          <ion-button fill="outline" size="large">😐 Regular</ion-button>
+          <ion-button fill="outline" size="large">😔 Mal</ion-button>
+        </div>
+      </ion-card-content>
+    </ion-card>
+    
+    <ion-card>
+      <ion-card-header>
+        <ion-card-title>Actividad Física</ion-card-title>
+      </ion-card-header>
+      
+      <ion-card-content>
+        <p>¿Hiciste ejercicio hoy?</p>
+        <ion-button expand="block" fill="outline">Registrar Actividad</ion-button>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

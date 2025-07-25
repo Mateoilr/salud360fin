@@ -1,0 +1,134 @@
+<ion-content class="login-content">
+  <div class="login-container">
+    <!-- Logo y título -->
+    <div class="logo-section">
+      <div class="app-logo">
+        <ion-icon name="heart" color="primary"></ion-icon>
+      </div>
+      <h1 class="app-title">Salud360</h1>
+      <p class="app-subtitle">Tu bienestar en tus manos</p>
+    </div>
+
+    <!-- Formulario de login -->
+    <form (ngSubmit)="login()" #loginForm="ngForm" class="login-form">
+      <h2 class="form-title">Iniciar Sesión</h2>
+
+      <!-- Campo de email -->
+      <div class="input-group">
+        <ion-item
+          [class.error]="emailError"
+          class="custom-input"
+          lines="none">
+          <ion-icon name="mail-outline" slot="start" color="medium"></ion-icon>
+          <ion-input
+            type="email"
+            [(ngModel)]="email"
+            name="email"
+            placeholder="Correo electrónico"
+            required
+            #emailInput="ngModel"
+            (ionBlur)="validateEmail()">
+          </ion-input>
+        </ion-item>
+        <div class="error-message" *ngIf="emailError">
+          <ion-icon name="alert-circle" color="danger"></ion-icon>
+          <span>{{ emailError }}</span>
+        </div>
+      </div>
+
+      <!-- Campo de contraseña -->
+      <div class="input-group">
+        <ion-item
+          [class.error]="passwordError"
+          class="custom-input"
+          lines="none">
+          <ion-icon name="lock-closed-outline" slot="start" color="medium"></ion-icon>
+          <ion-input
+            [type]="showPassword ? 'text' : 'password'"
+            [(ngModel)]="password"
+            name="password"
+            placeholder="Contraseña"
+            required
+            #passwordInput="ngModel"
+            (ionBlur)="validatePassword()">
+          </ion-input>
+          <ion-button
+            fill="clear"
+            slot="end"
+            (click)="togglePassword()"
+            color="medium">
+            <ion-icon [name]="showPassword ? 'eye-off' : 'eye'"></ion-icon>
+          </ion-button>
+        </ion-item>
+        <div class="error-message" *ngIf="passwordError">
+          <ion-icon name="alert-circle" color="danger"></ion-icon>
+          <span>{{ passwordError }}</span>
+        </div>
+      </div>
+
+      <!-- Olvidé mi contraseña -->
+      <div class="forgot-password">
+        <ion-button
+          fill="clear"
+          size="small"
+          color="medium"
+          (click)="forgotPassword()">
+          ¿Olvidaste tu contraseña?
+        </ion-button>
+      </div>
+
+      <!-- Error general -->
+      <ion-item
+        *ngIf="generalError"
+        class="error-alert"
+        lines="none">
+        <ion-icon name="alert-circle" slot="start" color="danger"></ion-icon>
+        <ion-label color="danger">
+          <h3>Error de autenticación</h3>
+          <p>{{ generalError }}</p>
+        </ion-label>
+      </ion-item>
+
+      <!-- Botón de login -->
+      <ion-button
+        expand="block"
+        type="submit"
+        class="login-btn"
+        [disabled]="isLoading || !loginForm.valid"
+        color="primary">
+        <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+        <span *ngIf="!isLoading">Iniciar Sesión</span>
+        <span *ngIf="isLoading">Iniciando...</span>
+      </ion-button>
+    </form>
+
+    <!-- Separador -->
+    <div class="divider">
+      <span>O continúa con</span>
+    </div>
+
+    <!-- Login social -->
+    <div class="social-section">
+      <ion-button
+        expand="block"
+        fill="outline"
+        class="social-btn google-btn"
+        (click)="loginWithGoogle()"
+        [disabled]="isLoading">
+        <ion-icon name="logo-google" slot="start"></ion-icon>
+        Google
+      </ion-button>
+    </div>
+
+    <!-- Link a registro -->
+    <div class="register-link">
+      <p>¿No tienes una cuenta?</p>
+      <ion-button
+        fill="clear"
+        color="primary"
+        (click)="goToRegister()">
+        Regístrate aquí
+      </ion-button>
+    </div>
+  </div>
+</ion-content>

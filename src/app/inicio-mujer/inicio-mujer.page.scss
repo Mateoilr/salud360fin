@@ -1,0 +1,199 @@
+/* Inicio Mujer - Estilos específicos */
+
+.welcome-section {
+  margin-bottom: 24px;
+
+  h2 {
+    color: var(--ion-color-primary);
+    font-size: 28px;
+    font-weight: 600;
+    margin: 0 0 8px 0;
+  }
+
+  p {
+    color: var(--ion-color-step-600);
+    font-size: 16px;
+    margin: 0;
+  }
+}
+
+.cycle-card {
+  background: linear-gradient(135deg, var(--ion-color-secondary) 0%, var(--ion-color-secondary-shade) 100%);
+  color: white;
+
+  ion-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: white;
+  }
+
+  .cycle-info {
+    margin: 16px 0;
+
+    .cycle-day {
+      text-align: center;
+      margin-bottom: 16px;
+
+      h3 {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0;
+        color: white;
+      }
+
+      p {
+        font-size: 14px;
+        opacity: 0.9;
+        margin: 4px 0 0 0;
+        color: white;
+      }
+    }
+
+    .cycle-visual {
+      margin: 16px 0;
+
+      ion-progress-bar {
+        height: 8px;
+        border-radius: 4px;
+        --background: rgba(255, 255, 255, 0.3);
+        --progress-background: white;
+      }
+    }
+  }
+
+  ion-button {
+    --color: white;
+    --border-color: white;
+    --border-width: 2px;
+    margin-top: 8px;
+  }
+}
+
+.energy-card {
+  .energy-level {
+    margin: 16px 0;
+
+    ion-range {
+      padding: 16px 0;
+
+      --bar-background: var(--ion-color-step-200);
+      --bar-background-active: var(--ion-color-warning);
+      --knob-background: var(--ion-color-warning);
+      --knob-size: 24px;
+    }
+
+    p {
+      text-align: center;
+      font-weight: 500;
+      color: var(--ion-color-warning);
+      margin: 8px 0 0 0;
+    }
+  }
+}
+
+.quick-actions {
+  margin: 32px 0;
+
+  h3 {
+    color: var(--ion-color-primary);
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0 0 16px 0;
+  }
+
+  .actions-grid {
+    display: grid;
+    gap: 12px;
+
+    ion-button {
+      --border-radius: var(--border-radius-button);
+      --border-width: 2px;
+      height: 56px;
+      font-weight: 500;
+
+      ion-icon {
+        font-size: 20px;
+      }
+    }
+  }
+}
+
+.reminders-card {
+  background: var(--ion-color-step-50);
+
+  ion-card-title {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ion-color-primary);
+  }
+
+  ion-item {
+    --background: transparent;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    margin: 8px 0;
+
+    ion-icon {
+      font-size: 24px;
+      margin-right: 16px;
+    }
+
+    ion-label {
+      h3 {
+        font-weight: 600;
+        color: var(--ion-text-color);
+        margin: 0 0 4px 0;
+      }
+
+      p {
+        color: var(--ion-color-step-600);
+        margin: 0;
+        font-size: 14px;
+      }
+    }
+  }
+}
+
+/* Responsive design */
+@media (min-width: 768px) {
+  .actions-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .actions-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+/* Animaciones */
+ion-card {
+  animation: slideInUp 0.6s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.welcome-section {
+  animation: fadeIn 0.8s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

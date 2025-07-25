@@ -1,0 +1,111 @@
+<ion-content class="gender-content">
+  <div class="gender-container">
+    <!-- Header con logo -->
+    <div class="header-section">
+      <div class="app-logo">
+        <ion-icon name="heart" color="primary"></ion-icon>
+      </div>
+      <h1 class="main-title">¡Casi listo!</h1>
+      <p class="subtitle">Ayúdanos a personalizar tu experiencia</p>
+    </div>
+
+    <!-- Pregunta principal -->
+    <div class="question-section">
+      <h2 class="question-title">¿Con qué género te identificas?</h2>
+      <p class="question-description">
+        Esta información nos ayudará a personalizar el contenido,
+        recomendaciones y funcionalidades específicas para ti.
+      </p>
+    </div>
+
+    <!-- Opciones de género -->
+    <form (ngSubmit)="continuar()" #genderForm="ngForm" class="gender-form">
+      <div class="gender-options">
+        <div class="gender-option mujer-option"
+             [class.selected]="selectedGender === 'mujer'"
+             [class.mujer-selected]="selectedGender === 'mujer'"
+             (click)="selectGender('mujer')">>
+          <div class="option-icon mujer">
+            <ion-icon name="flower"></ion-icon>
+          </div>
+          <div class="option-content">
+            <h3>Mujer</h3>
+            <p>Seguimiento del ciclo menstrual, fertilidad y bienestar femenino</p>
+            <div class="features-list">
+              <span class="feature">🌸 Ciclo menstrual</span>
+              <span class="feature">📊 Estadísticas específicas</span>
+              <span class="feature">💊 Recordatorios</span>
+            </div>
+          </div>
+          <div class="option-selector">
+            <ion-icon
+              [name]="selectedGender === 'mujer' ? 'radio-button-on' : 'radio-button-off'"
+              [color]="selectedGender === 'mujer' ? 'secondary' : 'medium'">
+            </ion-icon>
+          </div>
+        </div>
+
+        <div class="gender-option hombre-option"
+             [class.selected]="selectedGender === 'hombre'"
+             [class.hombre-selected]="selectedGender === 'hombre'"
+             (click)="selectGender('hombre')">>
+          <div class="option-icon hombre">
+            <ion-icon name="fitness"></ion-icon>
+          </div>
+          <div class="option-content">
+            <h3>Hombre</h3>
+            <p>Seguimiento de bienestar físico y mental masculino</p>
+            <div class="features-list">
+              <span class="feature">💪 Fitness y ejercicio</span>
+              <span class="feature">🧠 Bienestar mental</span>
+              <span class="feature">📈 Metas de salud</span>
+            </div>
+          </div>
+          <div class="option-selector">
+            <ion-icon
+              [name]="selectedGender === 'hombre' ? 'radio-button-on' : 'radio-button-off'"
+              [color]="selectedGender === 'hombre' ? 'tertiary' : 'medium'">
+            </ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <!-- Error message -->
+      <div class="error-message" *ngIf="error">
+        <ion-icon name="alert-circle" color="danger"></ion-icon>
+        <span>{{ error }}</span>
+      </div>
+
+      <!-- Botón de continuar -->
+      <ion-button
+        expand="block"
+        class="continue-btn"
+        type="submit"
+        [disabled]="!selectedGender || isLoading"
+        [color]="selectedGender === 'mujer' ? 'secondary' : selectedGender === 'hombre' ? 'tertiary' : 'primary'">
+        <ion-spinner *ngIf="isLoading" name="crescent"></ion-spinner>
+        <span *ngIf="!isLoading">Continuar</span>
+        <span *ngIf="isLoading">Configurando...</span>
+      </ion-button>
+
+      <!-- Skip por ahora -->
+      <div class="skip-section">
+        <ion-button
+          fill="clear"
+          color="medium"
+          (click)="skipForNow()">
+          Omitir por ahora
+        </ion-button>
+        <p class="skip-note">Podrás configurar esto más tarde en tu perfil</p>
+      </div>
+    </form>
+
+    <!-- Footer con información -->
+    <div class="footer-info">
+      <p>
+        <ion-icon name="shield-checkmark" color="success"></ion-icon>
+        Tus datos están seguros y protegidos
+      </p>
+    </div>
+  </div>
+</ion-content>

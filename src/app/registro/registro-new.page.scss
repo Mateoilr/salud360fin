@@ -1,0 +1,352 @@
+/* Registro Page - Basado en login con modificaciones */
+
+.register-content {
+  --background: linear-gradient(135deg, #FAFAFA 0%, #F0F0F0 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.register-container {
+  width: 100%;
+  max-width: 400px;
+  margin: auto;
+  background: white;
+  border-radius: var(--border-radius-card);
+  box-shadow: var(--shadow-card);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  animation: slideInUp 0.6s ease-out;
+}
+
+/* Sección del logo */
+.logo-section {
+  text-align: center;
+  margin-bottom: 24px;
+
+  .app-logo {
+    width: 70px;
+    height: 70px;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px auto;
+    box-shadow: var(--shadow-soft);
+
+    ion-icon {
+      font-size: 35px;
+      color: white;
+    }
+  }
+
+  .app-title {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--ion-color-primary);
+    margin: 0 0 4px 0;
+    letter-spacing: -0.5px;
+  }
+
+  .app-subtitle {
+    font-size: 14px;
+    color: var(--ion-color-step-600);
+    margin: 0;
+    font-weight: 400;
+  }
+}
+
+/* Formulario */
+.register-form {
+  .form-title {
+    font-size: 20px;
+    font-weight: 600;
+    color: var(--ion-text-color);
+    text-align: center;
+    margin: 0 0 20px 0;
+  }
+}
+
+/* Grupos de input - más compactos para registro */
+.input-group {
+  margin-bottom: 16px;
+
+  .custom-input {
+    --background: var(--ion-color-step-50);
+    --border-radius: var(--border-radius-soft);
+    --padding-start: 16px;
+    --padding-end: 16px;
+    --min-height: 52px;
+    --border-width: 2px;
+    --border-color: transparent;
+    transition: var(--transition-smooth);
+
+    &:focus-within {
+      --border-color: var(--ion-color-primary);
+      --background: white;
+      box-shadow: 0 0 0 3px rgba(154, 140, 255, 0.1);
+    }
+
+    &.error {
+      --border-color: var(--ion-color-danger);
+      --background: rgba(255, 107, 107, 0.05);
+    }
+
+    ion-icon {
+      margin-right: 12px;
+      font-size: 18px;
+    }
+
+    ion-input {
+      --color: var(--ion-text-color);
+      --placeholder-color: var(--ion-color-step-500);
+      font-size: 15px;
+    }
+
+    ion-button {
+      --color: var(--ion-color-step-500);
+      margin: 0;
+    }
+  }
+
+  .error-message {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    color: var(--ion-color-danger);
+    font-size: 13px;
+    font-weight: 500;
+
+    ion-icon {
+      font-size: 14px;
+    }
+  }
+}
+
+/* Sección de términos */
+.terms-section {
+  margin: 16px 0 20px 0;
+
+  .terms-item {
+    --background: transparent;
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    --padding-start: 0;
+    --padding-end: 0;
+
+    ion-checkbox {
+      margin-right: 12px;
+      --checkbox-background-checked: var(--ion-color-primary);
+      --border-color-checked: var(--ion-color-primary);
+    }
+
+    .terms-label {
+      font-size: 13px;
+      line-height: 1.4;
+      color: var(--ion-color-step-600);
+
+      ion-button {
+        --color: var(--ion-color-primary);
+        --padding-start: 0;
+        --padding-end: 0;
+        font-size: 13px;
+        text-decoration: underline;
+        display: inline;
+        height: auto;
+        margin: 0 2px;
+      }
+    }
+  }
+}
+
+/* Error general */
+.error-alert {
+  --background: rgba(255, 107, 107, 0.1);
+  --border-radius: var(--border-radius-button);
+  --padding-start: 16px;
+  --padding-end: 16px;
+  margin: 12px 0;
+  border: 1px solid var(--ion-color-danger);
+
+  ion-icon {
+    margin-right: 12px;
+  }
+
+  ion-label {
+    h3 {
+      margin: 0 0 4px 0;
+      font-weight: 600;
+      font-size: 14px;
+    }
+
+    p {
+      margin: 0;
+      font-size: 13px;
+    }
+  }
+}
+
+/* Botón de registro */
+.register-btn {
+  --border-radius: var(--border-radius-soft);
+  --box-shadow: var(--shadow-soft);
+  height: 52px;
+  font-size: 15px;
+  font-weight: 600;
+  margin: 20px 0 12px 0;
+  text-transform: none;
+
+  &:disabled {
+    --opacity: 0.6;
+  }
+
+  ion-spinner {
+    margin-right: 8px;
+  }
+}
+
+/* Separador */
+.divider {
+  display: flex;
+  align-items: center;
+  margin: 20px 0 16px 0;
+
+  &::before,
+  &::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--ion-color-step-200);
+  }
+
+  span {
+    padding: 0 12px;
+    color: var(--ion-color-step-500);
+    font-size: 13px;
+    font-weight: 500;
+  }
+}
+
+/* Sección social */
+.social-section {
+  .social-btn {
+    --border-radius: var(--border-radius-soft);
+    --border-width: 2px;
+    --border-color: var(--ion-color-step-200);
+    height: 48px;
+    font-size: 15px;
+    font-weight: 500;
+    margin-bottom: 12px;
+
+    &.google-btn {
+      --color: #4285f4;
+      --border-color: #4285f4;
+
+      &:hover {
+        --background: rgba(66, 133, 244, 0.05);
+      }
+    }
+
+    ion-icon {
+      font-size: 18px;
+      margin-right: 8px;
+    }
+  }
+}
+
+/* Link de login */
+.login-link {
+  text-align: center;
+  margin-top: 16px;
+
+  p {
+    color: var(--ion-color-step-600);
+    margin: 0 0 4px 0;
+    font-size: 13px;
+  }
+
+  ion-button {
+    --color: var(--ion-color-primary);
+    font-size: 14px;
+    font-weight: 600;
+    text-decoration: underline;
+  }
+}
+
+/* Animaciones */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive design */
+@media (max-width: 480px) {
+  .register-content {
+    padding: 16px;
+  }
+
+  .register-container {
+    padding: 24px 16px;
+  }
+
+  .logo-section {
+    margin-bottom: 20px;
+
+    .app-logo {
+      width: 60px;
+      height: 60px;
+
+      ion-icon {
+        font-size: 30px;
+      }
+    }
+
+    .app-title {
+      font-size: 24px;
+    }
+
+    .app-subtitle {
+      font-size: 13px;
+    }
+  }
+
+  .form-title {
+    font-size: 18px;
+  }
+
+  .input-group .custom-input {
+    --min-height: 48px;
+  }
+
+  .register-btn,
+  .social-btn {
+    height: 48px;
+    font-size: 14px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  .register-container {
+    background: var(--ion-color-step-100);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  }
+
+  .input-group .custom-input {
+    --background: var(--ion-color-step-150);
+
+    &:focus-within {
+      --background: var(--ion-color-step-100);
+    }
+  }
+}
